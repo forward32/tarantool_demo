@@ -18,7 +18,10 @@ r:route({path = '/session', method='POST'}, function(req)
 	time = body["time"]
 
 	box.space.sessions:auto_increment{email, action, time}
-	log.info('%s executed %s in %d', email, action, time)
+	log.info('[%s, %s, %d] - stored to space', email, action, time)
+
+	messages:put({email, action, time})
+	log.info('[%s, %s, %d] - putted to channel', email, action, time)
 
 	return {
 		status = 200,
@@ -27,3 +30,5 @@ end)
 
 srv:set_router(r)
 srv:start()
+
+require('console').start()
