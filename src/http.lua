@@ -20,7 +20,7 @@ r:route({path = '/session', method='POST'}, function(req)
 	box.space.sessions:auto_increment{email, action, time}
 	log.info('[%s, %s, %d] - stored to space', email, action, time)
 
-	messages:put({email, action, time})
+	messages:put(body)
 	log.info('[%s, %s, %d] - putted to channel', email, action, time)
 
 	return {
